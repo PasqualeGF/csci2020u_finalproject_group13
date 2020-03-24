@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -39,8 +40,8 @@ public class Client extends Application {
 	// this will create reply button which triggers the response function.
 	Button replyBtn = new Button("Reply");
 	// this button will save the chat text into a txt file.
-	Button saveBtn = new Button("Save");
-	Label nameLbl = new Label("Client Name");
+	Button saveBtn = new Button("Save Chat");
+	Label nameLbl = new Label(" Client Name:");
 	//reply Body
 	TextField messageBody = new TextField();
 	// this will add the user name from the textfield
@@ -101,9 +102,21 @@ public class Client extends Application {
 
 	// this function will setup the chat components
 	private void setupLowerSide() {
+		//Set number of cols to organize elements
+		int numCols = 4;
+		for (int i = 0; i < numCols; i++) {
+			ColumnConstraints colConst = new ColumnConstraints();
+			colConst.setPrefWidth(110);
+			if (i==0){
+				colConst.setPrefWidth(104);
+			}
+			lowerSide.getColumnConstraints().add(colConst);
+		}
+		// set message body max width
+		messageBody.setMaxWidth(2000);
 		// this will add the reply button and the messageBody to the LowerPane
-		lowerSide.add(replyBtn, 0, 0);
-		lowerSide.add(messageBody, 1, 0);
+		lowerSide.add(replyBtn, 4, 0);
+		lowerSide.add(messageBody, 0, 0,4,1);
 		replyBtn.setOnAction(
 				// setup the reply by adding the text to chat area and write it to the client.
 				
@@ -137,9 +150,25 @@ public class Client extends Application {
 
 	// this function will setup the name components
 	private void setupUpperside(Stage primaryStage) {
+		//Set number of cols to organize elements
+		int numCols = 4;
+		for (int i = 0; i < numCols; i++) {
+			ColumnConstraints colConst = new ColumnConstraints();
+			if (i==0) {
+				colConst.setPrefWidth(80);
+			}
+			else if (i==2){
+				colConst.setPrefWidth(130);
+			}
+			else{
+				colConst.setPrefWidth(100);
+			}
+			upperSide.getColumnConstraints().add(colConst);
+		}
+		ClientNameField.setMaxWidth(1000);
 		upperSide.add(nameLbl, 0, 0);
-		upperSide.add(ClientNameField, 1, 0);
-		upperSide.add(saveBtn, 2, 0);
+		upperSide.add(ClientNameField, 1, 0,2,1);
+		upperSide.add(saveBtn, 4, 0);
 		saveBtn.setOnAction(r -> {
 			saveAsFile = fil2_chooser.showSaveDialog(primaryStage);
 			saveAs();

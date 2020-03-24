@@ -114,7 +114,7 @@
       <Port>5050</Port>
     </configuration>
     <configuration name="Main" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="chatservice.Agent" />
+      <option name="MAIN_CLASS_NAME" value="chatservice.Client" />
       <module name="csci2020u_finalproject_group13" />
       <extension name="coverage">
         <pattern>
@@ -188,34 +188,34 @@
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="95" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585013440176">
+    <state x="95" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585015497820">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="95" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1585013440176" />
-    <state x="370" y="125" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1585013438750">
+    <state x="95" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1585015497820" />
+    <state x="370" y="125" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1585015495938">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="370" y="125" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1280.680@0.0.1280.680" timestamp="1585013438750" />
+    <state x="370" y="125" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1280.680@0.0.1280.680" timestamp="1585015495938" />
     <state x="371" y="88" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1585011698408">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="371" y="88" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.680@0.0.1280.680" timestamp="1585011698408" />
-    <state width="1202" height="147" key="GridCell.Tab.0.bottom" timestamp="1585015039950">
+    <state width="1202" height="147" key="GridCell.Tab.0.bottom" timestamp="1585015520486">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1202" height="147" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1585015039950" />
-    <state width="1202" height="147" key="GridCell.Tab.0.center" timestamp="1585015039950">
+    <state width="1202" height="147" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1585015520486" />
+    <state width="1202" height="147" key="GridCell.Tab.0.center" timestamp="1585015520484">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1202" height="147" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1585015039950" />
-    <state width="1202" height="147" key="GridCell.Tab.0.left" timestamp="1585015039949">
+    <state width="1202" height="147" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1585015520484" />
+    <state width="1202" height="147" key="GridCell.Tab.0.left" timestamp="1585015520484">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1202" height="147" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1585015039949" />
-    <state width="1202" height="147" key="GridCell.Tab.0.right" timestamp="1585015039950">
+    <state width="1202" height="147" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1585015520484" />
+    <state width="1202" height="147" key="GridCell.Tab.0.right" timestamp="1585015520484">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1202" height="147" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1585015039950" />
+    <state width="1202" height="147" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1585015520484" />
     <state x="336" y="166" key="com.intellij.ide.util.TipDialog" timestamp="1585012174090">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
