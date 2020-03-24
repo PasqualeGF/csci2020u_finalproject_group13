@@ -1,6 +1,6 @@
 /*
-* 										FinalProject
-* 										Group:
+* 										CSCI 2020 FinalProject
+* 										Group13
 * 											
 */
 
