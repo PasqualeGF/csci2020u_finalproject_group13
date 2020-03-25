@@ -37,7 +37,7 @@ import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 public class Agent extends Application {
 
 	// Creating Window Components and GUI Components
-	// The VBoc container will contain the window
+	// The VBox container will contain the window
 	VBox container = new VBox();
 	//upperSide nameLabel,AgentNameField and save button
 	GridPane upperSide = new GridPane();
