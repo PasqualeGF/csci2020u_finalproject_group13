@@ -4,10 +4,12 @@ package chatservice;/*
 * 											
 */
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.Writer;
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -22,6 +24,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import javax.swing.*;
 
 public class Agent extends Application {
 
@@ -51,10 +55,14 @@ public class Agent extends Application {
 	// File Chooser to save the file
 	FileChooser fil2_chooser = new FileChooser();
 
+	// Main start function
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// this will create and configure User Window
+		primaryStage.setResizable(false);
 		setupGUI(primaryStage);
+		// This will start the chat server, see near bottom of program for server code
+		startChat();
 
 	}
 
@@ -125,7 +133,9 @@ public class Agent extends Application {
 				e -> {//check if any of the fields is empty and stop the process
 					if (messageBody.getText().isEmpty() == false & AgentNameField.getText().isEmpty()==false)
 						{chatText.appendText(
-								"Agent(" + AgentNameField.getText() + "):" + "    " + messageBody.getText() + "\n");
+								"\nAgent (" + AgentNameField.getText() + "):" + "    " + messageBody.getText());
+						// Send message to Client
+							sendMessage("\nAgent (" + AgentNameField.getText() + "):" + "    " + messageBody.getText());
 						// will stop the Agent from changing name
 						AgentNameField.setDisable(true);
 						}
@@ -146,7 +156,7 @@ public class Agent extends Application {
 	private void setupErrorBox() {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error Box");
-		alert.setContentText("Reply or Name is empty");
+		alert.setContentText("Reply or Name is empty.");
 		alert.showAndWait();
 	}
 
@@ -179,9 +189,6 @@ public class Agent extends Application {
 
 	}
 
-	public static void main(String[] args) {
-		Application.launch(args);
-	}
 	//this will write conversation to the file using writer and bufferedwriter
 	private void saveAs() {
 	//creates buffer writer, get the textarea content, write to the file, then it closes the connection
@@ -190,15 +197,123 @@ public class Agent extends Application {
 			writer.write(chatContent);
 			writer.close();
 			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Conformation Box");
-			alert.setContentText("Conversation has been successfully saved");
+			alert.setTitle("Confirmation Box");
+			alert.setContentText("Conversation has been successfully saved!");
 			alert.showAndWait();
 			
 		} catch (Exception e) {
-			System.out.println("Problem while writing the file");
+			System.out.println("Problem while writing the file.");
 			e.printStackTrace();
 		}
 
+	}
+
+	/********************************************* SERVER CODE *********************************************/
+	private ObjectOutputStream output;
+	private ObjectInputStream input;
+	private ServerSocket server;
+	private String message = "";
+	private Socket connection;
+	// Function to start server and chat
+	public void startChat(){
+		// Create another thread for server to run on
+		Runnable serverTask = new Runnable() {
+			@Override
+			public void run() {
+
+				try {
+					// Establish server socket and max number of backlogged connected users
+					server = new ServerSocket(3000, 50);
+					while (true) {
+						try {
+							// Wait for connection and run input and output stream functions to retrieve and send messages
+							waitingToConnect();
+							setupStreams();
+							connectedChat();
+						} catch (EOFException eofException) {
+							// If server connection interrupted print error message
+							showMessage("\n ERROR: Connection interrupted. ");
+						} finally {
+							// Close connection when done
+							closeConnection();
+						}
+					}
+				} catch (IOException ioException) {
+					ioException.printStackTrace();
+				}
+			}
+		};
+		// Start server thread
+		Thread serverThread = new Thread(serverTask);
+		serverThread.start();
+	}
+
+	// Function to connect to server and client
+	private void waitingToConnect() throws IOException{
+		// Display waiting message then connection info when connected
+		showMessage(" Waiting for a client to connect... \n");
+		connection = server.accept();
+		showMessage("\n Now connected to: " + connection.getInetAddress().getHostName());
+	}
+	// Function to setup streams
+	private void setupStreams() throws IOException{
+		// Setup input and output streams
+		input = new ObjectInputStream(connection.getInputStream());
+		output = new ObjectOutputStream(connection.getOutputStream());
+		output.flush();
+		// Print confirmation message
+		showMessage("\n Client is ready to chat. \n");
+	}
+
+	// Function to handle messages while chatting
+	private void connectedChat() throws IOException{
+		do{
+			try{
+				// Append incoming user's message
+				message = (String) input.readObject();
+				showMessage(message);
+			}catch(ClassNotFoundException classNotFoundException){
+				// If message sent is not valid, print error message
+				showMessage("ERROR: User has sent an invalid object!");
+			}
+		}while(!message.equals("END CHAT"));
+
+
+	}
+
+	// Function to close the connections
+	public void closeConnection(){
+		showMessage("\n Closing Connections... \n");
+		try{
+			// Close path to and from client, as well as connection
+			output.close();
+			input.close();
+			connection.close();
+		}catch(IOException ioException){
+			ioException.printStackTrace();
+		}
+	}
+
+	// Send message to the client
+	private void sendMessage(String message){
+		try{
+			output.writeObject(message);
+			output.flush();
+		}catch(IOException ioException){
+			chatText.appendText("\n ERROR: message not sent, please retry.");
+		}
+	}
+
+	// Update chat windows with message
+	private void showMessage(final String text){
+		SwingUtilities.invokeLater(
+				new Runnable(){
+					public void run(){
+						// Show message in text box
+						chatText.appendText(text);
+					}
+				}
+		);
 	}
 
 }
