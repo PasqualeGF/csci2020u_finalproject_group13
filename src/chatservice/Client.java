@@ -4,6 +4,8 @@ package chatservice;/*
 * 											
 */
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -11,6 +13,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -26,6 +29,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javax.swing.*;
+
+import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 
 public class Client extends Application {
 
@@ -65,7 +70,12 @@ public class Client extends Application {
 		startChat();
 
 	}
-
+	// Override stop to ensure program exits successfully on window close
+	@Override
+	public void stop() throws Exception {
+		super.stop();
+		System.exit(0);
+	}
 	private void setupGUI(Stage primaryStage) {
 		// this method will configure the upperSide GridPane
 		// contains nameLabel,ClientNameField and save button
@@ -179,6 +189,7 @@ public class Client extends Application {
 		upperSide.add(nameLbl, 0, 0);
 		upperSide.add(ClientNameField, 1, 0,2,1);
 		upperSide.add(saveBtn, 4, 0);
+		// Save chat on save button click
 		saveBtn.setOnAction(r -> {
 			saveAsFile = fil2_chooser.showSaveDialog(primaryStage);
 			saveAs();
@@ -270,7 +281,7 @@ public class Client extends Application {
 
 	// Function to close the connections
 	public void closeConnection(){
-		showMessage("\n Closing connections... \n");
+		showMessage("\n Agent has left the chat.\n Connection terminated. \n");
 		try{
 			// Close path to and from Agent, as well as connection
 			output.close();

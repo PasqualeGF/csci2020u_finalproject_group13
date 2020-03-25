@@ -4,13 +4,17 @@ package chatservice;/*
 * 											
 */
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -26,6 +30,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javax.swing.*;
+
+import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 
 public class Agent extends Application {
 
@@ -50,6 +56,12 @@ public class Agent extends Application {
 	TextField messageBody = new TextField();
 	// this will add the user name from the textfield
 	TextField AgentNameField = new TextField();
+	// Product info file to load
+	File loadFile;
+	// Button to load product info
+	Button loadBtn = new Button("Load Product");
+	// File chooser to load product data from a txt file
+	FileChooser fil_chooser = new FileChooser();
 	// Target file to save the conversation.
 	File saveAsFile;
 	// File Chooser to save the file
@@ -63,9 +75,13 @@ public class Agent extends Application {
 		setupGUI(primaryStage);
 		// This will start the chat server, see near bottom of program for server code
 		startChat();
-
 	}
-
+	// Override stop to ensure program exits successfully on window close
+	@Override
+	public void stop() throws Exception {
+		super.stop();
+		System.exit(0);
+	}
 	private void setupGUI(Stage primaryStage) {
 		// this method will configure the upperSide GridPane
 		// contains nameLabel,AgentNameField and save button
@@ -119,7 +135,7 @@ public class Agent extends Application {
 			ColumnConstraints colConst = new ColumnConstraints();
 			colConst.setPrefWidth(110);
 			if (i==0){
-				colConst.setPrefWidth(104);
+				colConst.setPrefWidth(103);
 			}
 			lowerSide.getColumnConstraints().add(colConst);
 		}
@@ -163,29 +179,70 @@ public class Agent extends Application {
 	// this function will setup the name components
 	private void setupUpperSide(Stage primaryStage) {
 		//Set number of cols to organize elements
-		int numCols = 4;
+		int numCols = 5;
 		for (int i = 0; i < numCols; i++) {
 			ColumnConstraints colConst = new ColumnConstraints();
 			if (i==0) {
 				colConst.setPrefWidth(80);
 			}
-			else if (i==2){
-				colConst.setPrefWidth(130);
+			else if (i==1){
+				colConst.setPrefWidth(100);
+			}
+			else if (i==4){
+				colConst.setPrefWidth(90);
 			}
 			else{
-				colConst.setPrefWidth(100);
+				colConst.setPrefWidth(70);
 			}
 			upperSide.getColumnConstraints().add(colConst);
 		}
 		AgentNameField.setMaxWidth(1000);
 		upperSide.add(nameLbl, 0, 0);
 		upperSide.add(AgentNameField, 1, 0,2,1);
-		upperSide.add(saveBtn, 4, 0);
+		upperSide.add(loadBtn, 4, 0);
+		upperSide.add(saveBtn, 5, 0);
+		// Load file on clicking load button
+		loadBtn.setOnAction(e->{
+			try {
+				loadFile=fil_chooser.showOpenDialog(primaryStage);
+				loadProduct();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		// Save chat on clicking save button
 		saveBtn.setOnAction(r -> {
+			// This will add filters when saving files it will save it as txt file
+			FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Text File", "*.txt");
+			fil2_chooser.getExtensionFilters().add(extFilter);
 			saveAsFile = fil2_chooser.showSaveDialog(primaryStage);
 			saveAs();
 		});
 
+
+	}
+
+	// Function to load product data from file upon clicking Load button
+
+	private void loadProduct() throws Exception {
+
+		try {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			// Create input stream
+			Scanner inputStream = new Scanner(loadFile);
+			while (inputStream.hasNext()) {
+				// Read in file, append to message box for sending
+				String data = inputStream.nextLine();
+				messageBody.appendText(data);
+			}
+			//this will show a conformation that file has been loaded successfully
+			alert.setTitle("Confirmation Box");
+			alert.setContentText("File has been successfully loaded!");
+			alert.showAndWait();
+		} catch (FileNotFoundException e) {
+			System.out.println("Something went wrong while reading the file");
+		}
 
 	}
 
@@ -283,7 +340,7 @@ public class Agent extends Application {
 
 	// Function to close the connections
 	public void closeConnection(){
-		showMessage("\n Closing Connections... \n");
+		showMessage("\n Client has left the chat.\n Connection terminated.\n");
 		try{
 			// Close path to and from client, as well as connection
 			output.close();
