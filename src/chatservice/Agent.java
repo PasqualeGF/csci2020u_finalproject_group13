@@ -1,6 +1,7 @@
-package chatservice;/*
+package chatservice;
+/*
 * 										CSCI 2020 FinalProject
-* 										Group13
+* 										Group 13
 * 											
 */
 
@@ -35,24 +36,24 @@ import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 
 public class Agent extends Application {
 
-	// creating Window Components
-	// creating GUI Components
-	// this will contain the window
+	// Creating Window Components
+	// Creating GUI Components
+	// This will contain the window
 	VBox container = new VBox();
-	// contains nameLabel,AgentNameField and save button
+	// Contains nameLabel,AgentNameField and save button
 	GridPane upperSide = new GridPane();
-	// this is create scrollbar for the textarea
+	// This is to create the scrollbar for the textarea
 	ScrollPane chatBar = new ScrollPane();
 	TextArea chatText = new TextArea();
-	// this will contain the reply button, messageBody
+	// This will contain the reply button, messageBody
 	GridPane lowerSide = new GridPane();
-	// create UI controls
-	// this will create reply button which triggers the response function.
+	// Create UI controls
+	// This will create reply button which triggers the response function.
 	Button replyBtn = new Button("Reply");
-	// this button will save the chat text into a txt file.
+	// This button will save the chat text into a txt file.
 	Button saveBtn = new Button("Save Chat");
 	Label nameLbl = new Label(" Agent Name:");
-	//reply Body
+	// Reply body
 	TextField messageBody = new TextField();
 	// this will add the user name from the textfield
 	TextField AgentNameField = new TextField();
@@ -70,7 +71,7 @@ public class Agent extends Application {
 	// Main start function
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		// this will create and configure User Window
+		// This will create and configure User Window
 		primaryStage.setResizable(false);
 		setupGUI(primaryStage);
 		// This will start the chat server, see near bottom of program for server code
@@ -83,21 +84,19 @@ public class Agent extends Application {
 		System.exit(0);
 	}
 	private void setupGUI(Stage primaryStage) {
-		// this method will configure the upperSide GridPane
-		// contains nameLabel,AgentNameField and save button
+		// this method will configure the upperSide GridPane containing nameLabel, AgentNameField and save/load btns
 		setupUpperSide(primaryStage);
-		// this method will configure the lowerSide GridPane 
-		//contains replyBtn,messageBody
+		// This method will configure the lowerSide GridPane containing replyBtn,messageBody
 		setupLowerSide();
-		// this method will configure the ScrollBar and the TextArea
+		// This method will configure the ScrollBar and the TextArea
 		setupChat();
-		// adding children to Vbox
+		// Adding children to Vbox
 		setupContainer();
-		// show the scene
+		// Show the scene
 		setupStage(primaryStage);
 	}
 
-	// this function will setup the stage settings
+	// This function will setup the stage settings
 	private void setupStage(Stage primaryStage) {
 		Scene scene = new Scene(container);
 		primaryStage.setScene(scene);
@@ -105,31 +104,30 @@ public class Agent extends Application {
 		primaryStage.show();
 	}
 
-	// this function will setup the container area
+	// This function will setup the container area
 	private void setupContainer() {
-		// add components in order to fill the window
+		// Add components in order to fill the window
 		container.getChildren().addAll(upperSide, chatBar, lowerSide);
 	}
 
 	/*
-	 * this function will setup the the chat scroll bar it will add the textarea to
-	 * it
+	 * This function will setup the the chat scroll bar it will add the textarea to it
+	 *
 	 */
 	private void setupChat() {
 		// Set width
 		chatText.setMaxWidth(1000);
 
-		// this will disable the textarea using SetEditable();
+		// This will disable editing in the textarea using SetEditable();
 		chatText.setEditable(false);
-		// this will add the textarea to the scrollbar
+		// This will add the textarea to the scrollbar
 		chatBar.setContent(chatText);
-		// this will change the default font color to black
 
 	}
 
-	// this function will setup the chat components
+	// This function will setup the chat components
 	private void setupLowerSide() {
-		//Set number of cols to organize elements
+		// Set number of cols to organize elements
 		int numCols = 4;
 		for (int i = 0; i < numCols; i++) {
 			ColumnConstraints colConst = new ColumnConstraints();
@@ -139,36 +137,34 @@ public class Agent extends Application {
 			}
 			lowerSide.getColumnConstraints().add(colConst);
 		}
-		// this will add the reply button and the messageBody to the LowerPane
+		// Add the reply button and the messageBody to the LowerPane
 		messageBody.setMaxWidth(2000);
 		lowerSide.add(replyBtn, 4, 0);
 		lowerSide.add(messageBody, 0, 0,4,1);
 		replyBtn.setOnAction(
-				// setup the reply by adding the text to chat area and write it to the Agent.
+				// Setup the reply by adding the text to chat area and send it to the Agent.
 				
-				e -> {//check if any of the fields is empty and stop the process
+				e -> {// Check if any of the fields is empty and stop the process
 					if (messageBody.getText().isEmpty() == false & AgentNameField.getText().isEmpty()==false)
 						{chatText.appendText(
-								"\nAgent (" + AgentNameField.getText() + "):" + "    " + messageBody.getText());
+								"\n Agent (" + AgentNameField.getText() + "):" + "    " + messageBody.getText());
 						// Send message to Client
-							sendMessage("\nAgent (" + AgentNameField.getText() + "):" + "    " + messageBody.getText());
-						// will stop the Agent from changing name
+							sendMessage("\n Agent (" + AgentNameField.getText() + "):" + "    " + messageBody.getText());
+						// This will stop the Agent from changing name once set
 						AgentNameField.setDisable(true);
 						}
 					
-					else {// this code will stop the user from sending empty replies it uses alert Box
+					else {// Stop the user from sending empty replies via alert Box
 						setupErrorBox();
 					}
-					// reset the reply text
+					// Reset the reply text
 					messageBody.setText("");
-					// send the response to the Agent
-					// -----
 					
 				});
 
 	}
 
-	// this code will stop the user from sending empty replies it uses alert Box
+	// This function will stop the user from sending empty replies it uses alert Box
 	private void setupErrorBox() {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error Box");
@@ -176,7 +172,7 @@ public class Agent extends Application {
 		alert.showAndWait();
 	}
 
-	// this function will setup the name components
+	// This function will setup the name components
 	private void setupUpperSide(Stage primaryStage) {
 		//Set number of cols to organize elements
 		int numCols = 5;
@@ -236,7 +232,7 @@ public class Agent extends Application {
 				String data = inputStream.nextLine();
 				messageBody.appendText(data);
 			}
-			//this will show a conformation that file has been loaded successfully
+			// This will show a confirmation that file has been loaded successfully
 			alert.setTitle("Confirmation Box");
 			alert.setContentText("File has been successfully loaded!");
 			alert.showAndWait();
@@ -246,9 +242,9 @@ public class Agent extends Application {
 
 	}
 
-	//this will write conversation to the file using writer and bufferedwriter
+	// This will write the conversation to the file using writer and bufferedwriter
 	private void saveAs() {
-	//creates buffer writer, get the textarea content, write to the file, then it closes the connection
+	// Creates buffer writer, get the textarea content, write to the file, then it closes the connection
 		try (Writer writer = new BufferedWriter(new FileWriter(saveAsFile))) {
 			String chatContent = chatText.getText();
 			writer.write(chatContent);
@@ -279,9 +275,9 @@ public class Agent extends Application {
 			public void run() {
 
 				try {
-					// Establish server socket and max number of backlogged connected users
-					server = new ServerSocket(3000, 50);
 					while (true) {
+						// Establish server socket and max number of backlogged connected users
+						server = new ServerSocket(3000, 50);
 						try {
 							// Wait for connection and run input and output stream functions to retrieve and send messages
 							waitingToConnect();

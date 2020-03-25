@@ -1,4 +1,5 @@
-package chatservice;/*
+package chatservice;
+/*
 * 										CSCI2020 FinalProject
 * 										Group 13
 * 											
@@ -34,26 +35,26 @@ import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 
 public class Client extends Application {
 
-	// creating Window Components
-	// creating GUI Components
-	// this will contain the window
+	// Creating Window Components
+	// Creating GUI Components
+	// This will contain the window
 	VBox container = new VBox();
-	// contains nameLabel,ClientNameField and save button
+	// Create pane which contains nameLabel, ClientNameField and save button
 	GridPane upperSide = new GridPane();
-	// this is create scrollbar for the textarea
+	// Create the scrollbar and textarea
 	ScrollPane chatBar = new ScrollPane();
 	TextArea chatText = new TextArea();
-	// this will contain the replybutton, messageBody
+	// This will contain the replybutton, messageBody
 	GridPane lowerSide = new GridPane();
-	// create UI controls
-	// this will create reply button which triggers the response function.
+	// Create UI controls
+	// This will create reply button which triggers the response function.
 	Button replyBtn = new Button("Reply");
-	// this button will save the chat text into a txt file.
+	// This button will save the chat text into a txt file.
 	Button saveBtn = new Button("Save Chat");
 	Label nameLbl = new Label(" Client Name:");
-	//reply Body
+	// Reply body
 	TextField messageBody = new TextField();
-	// this will add the user name from the textfield
+	// This will add the user name from the textfield
 	TextField ClientNameField = new TextField();
 	// Target file to save the conversation.
 	File saveAsFile;
@@ -63,7 +64,7 @@ public class Client extends Application {
 	// Main start function
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		// this will create and configure User Window
+		// This will create and configure User Window
 		primaryStage.setResizable(false);
 		setupGUI(primaryStage);
 		// This will start the chat server, see near bottom of program for server code
@@ -77,21 +78,21 @@ public class Client extends Application {
 		System.exit(0);
 	}
 	private void setupGUI(Stage primaryStage) {
-		// this method will configure the upperSide GridPane
-		// contains nameLabel,ClientNameField and save button
+		// This method will configure the upperSide GridPane
+		// Contains nameLabel, ClientNameField and save button
 		setupUpperside(primaryStage);
-		// this method will configure the lowerSide GridPane 
-		//contains replyBtn,messageBody
+		// This method will configure the lowerSide GridPane
+		// Contains replyBtn, messageBody
 		setupLowerSide();
-		// this method will configure the ScrollBar and the TextArea
+		// This method will configure the ScrollBar and the TextArea
 		setupChat();
-		// adding childern to Vbox
+		// Adding children to Vbox
 		setupContainer();
-		// show the scene
+		// Show the scene
 		setupStage(primaryStage);
 	}
 
-	// this function will setup the stage settings
+	// This function will setup the stage settings
 	private void setupStage(Stage primaryStage) {
 		Scene scene = new Scene(container);
 		primaryStage.setScene(scene);
@@ -99,26 +100,25 @@ public class Client extends Application {
 		primaryStage.show();
 	}
 
-	// this function will setup the container area
+	// This function will setup the container area
 	private void setupContainer() {
 		// add components in order to fill the window
 		container.getChildren().addAll(upperSide, chatBar, lowerSide);
 	}
 
 	/*
-	 * this function will setup the the chat scroll bar it will add the textarea to
-	 * it
+	 * This function will setup the the chat scroll bar it will add the textarea to it
+	 *
 	 */
 	private void setupChat() {
-		// this will disable the textarea using SetEditable();
+		// This will disable editing the textarea using SetEditable();
 		chatText.setEditable(false);
-		// this will add the textarea to the scrollbar
+		// This will add the textarea to the scrollbar
 		chatBar.setContent(chatText);
-		// this will change the default font color to black
 
 	}
 
-	// this function will setup the chat components
+	// This function will setup the chat components
 	private void setupLowerSide() {
 		//Set number of cols to organize elements
 		int numCols = 4;
@@ -130,37 +130,34 @@ public class Client extends Application {
 			}
 			lowerSide.getColumnConstraints().add(colConst);
 		}
-		// set message body max width
+		// Set message body max width
 		messageBody.setMaxWidth(2000);
-		// this will add the reply button and the messageBody to the LowerPane
+		// This will add the reply button and the messageBody to the LowerPane
 		lowerSide.add(replyBtn, 4, 0);
 		lowerSide.add(messageBody, 0, 0,4,1);
 		replyBtn.setOnAction(
-				// setup the reply by adding the text to chat area and write it to the client.
+				// Setup the reply by adding the text to chat area and write it to the client.
 				
-				e -> {//check if any of the fields is empty and stop the process
+				e -> {// Check if any of the fields are empty and stop the process
 					if (messageBody.getText().isEmpty() == false & ClientNameField.getText().isEmpty()==false)
 						{chatText.appendText(
-								"\nClient (" + ClientNameField.getText() + "):" + "    " + messageBody.getText());
+								"\n Client (" + ClientNameField.getText() + "):" + "    " + messageBody.getText());
 						// Send message to Agent
-							sendMessage("\nClient (" + ClientNameField.getText() + "):" + "    " + messageBody.getText());
-						// will stop the client from changing name
+							sendMessage("\n Client (" + ClientNameField.getText() + "):" + "    " + messageBody.getText());
+						// Will stop the client from changing name once set
 						ClientNameField.setDisable(true);
 						}
 					
-					else {// this code will stop the user from sending empty replies it uses alert Box
+					else {// This code will stop the user from sending empty replies using an alert Box
 						setupErrorBox();
 					}
-					// reset the reply text
+					// Reset the reply text
 					messageBody.setText("");
-					// send the response to the client
-					// -----
-					
 				});
 
 	}
 
-	// this code will stop the user from sending empty replies it uses alert Box
+	// This function will stop the user from sending empty replies it uses alert Box
 	private void setupErrorBox() {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error Box");
@@ -168,9 +165,9 @@ public class Client extends Application {
 		alert.showAndWait();
 	}
 
-	// this function will setup the name components
+	// This function will setup the name components
 	private void setupUpperside(Stage primaryStage) {
-		//Set number of cols to organize elements
+		// Set number of cols to organize elements
 		int numCols = 4;
 		for (int i = 0; i < numCols; i++) {
 			ColumnConstraints colConst = new ColumnConstraints();
@@ -185,6 +182,7 @@ public class Client extends Application {
 			}
 			upperSide.getColumnConstraints().add(colConst);
 		}
+		// Add elements to cols
 		ClientNameField.setMaxWidth(1000);
 		upperSide.add(nameLbl, 0, 0);
 		upperSide.add(ClientNameField, 1, 0,2,1);
@@ -197,8 +195,9 @@ public class Client extends Application {
 
 	}
 
-	// Creates buffer writer, get the textarea content, write to the file, then it closes the connection
+	// This will write the conversation to the file using writer and bufferedwriter
 	private void saveAs() {
+		// Creates buffer writer, get the textarea content, write to the file, then it closes the connection
 		try (Writer writer = new BufferedWriter(new FileWriter(saveAsFile))) {
 			String chatContent = chatText.getText();
 			writer.write(chatContent);
