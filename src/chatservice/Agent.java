@@ -36,32 +36,30 @@ import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 
 public class Agent extends Application {
 
-	// Creating Window Components
-	// Creating GUI Components
-	// This will contain the window
+	// Creating Window Components and GUI Components
+	// The VBoc container will contain the window
 	VBox container = new VBox();
-	// Contains nameLabel,AgentNameField and save button
+	//upperSide nameLabel,AgentNameField and save button
 	GridPane upperSide = new GridPane();
-	// This is to create the scrollbar for the textarea
+	//Scrollbar is created for the textarea
 	ScrollPane chatBar = new ScrollPane();
 	TextArea chatText = new TextArea();
-	// This will contain the reply button, messageBody
+	// lowerSide GridPane contains: reply button, messageBody
 	GridPane lowerSide = new GridPane();
-	// Create UI controls
-	// This will create reply button which triggers the response function.
+	// Create UI controls: reply button triggers response function.
 	Button replyBtn = new Button("Reply");
-	// This button will save the chat text into a txt file.
+	// saveBtn will save the chat text into a txt file.
 	Button saveBtn = new Button("Save Chat");
 	Label nameLbl = new Label(" Agent Name:");
-	// Reply body
+
 	TextField messageBody = new TextField();
-	// this will add the user name from the textfield
+	// Method to get the textflied from user name
 	TextField AgentNameField = new TextField();
-	// Product info file to load
+	// Product info loads
 	File loadFile;
 	// Button to load product info
 	Button loadBtn = new Button("Load Product");
-	// File chooser to load product data from a txt file
+	// Fil_chooser loads the product data from a txt file
 	FileChooser fil_chooser = new FileChooser();
 	// Target file to save the conversation.
 	File saveAsFile;
@@ -74,7 +72,7 @@ public class Agent extends Application {
 		// This will create and configure User Window
 		primaryStage.setResizable(false);
 		setupGUI(primaryStage);
-		// This will start the chat server, see near bottom of program for server code
+		// Starts the chat server
 		startChat();
 	}
 	// Override stop to ensure program exits successfully on window close
@@ -106,30 +104,30 @@ public class Agent extends Application {
 
 	// This function will setup the container area
 	private void setupContainer() {
-		// Add components in order to fill the window
+		// Add components to the window
 		container.getChildren().addAll(upperSide, chatBar, lowerSide);
 	}
 
 	/*
-	 * This function will setup the the chat scroll bar it will add the textarea to it
+	 * Function setup the chat scrollbar, adds the textarea to it
 	 *
 	 */
 	private void setupChat() {
 		// Set width
 		chatText.setMaxWidth(1000);
 
-		// This will disable editing in the textarea using SetEditable();
+		// Disables editing in the textarea 
 		chatText.setEditable(false);
-		// This will add the textarea to the scrollbar
+		// Add textarea to the scrollbar
 		chatBar.setContent(chatText);
 
 	}
 
-	// This function will setup the chat components
+	// Sets up the chat components
 	private void setupLowerSide() {
 		// Set number of cols to organize elements
 		int numCols = 4;
-		for (int i = 0; i < numCols; i++) {
+		for (int i = 0; i < numCols; i++) { //loops through the number of columns
 			ColumnConstraints colConst = new ColumnConstraints();
 			colConst.setPrefWidth(110);
 			if (i==0){
@@ -141,9 +139,8 @@ public class Agent extends Application {
 		messageBody.setMaxWidth(2000);
 		lowerSide.add(replyBtn, 4, 0);
 		lowerSide.add(messageBody, 0, 0,4,1);
+		//Adds the text to chat area and provides it to the Agent.
 		replyBtn.setOnAction(
-				// Setup the reply by adding the text to chat area and send it to the Agent.
-				
 				e -> {// Check if any of the fields is empty and stop the process
 					if (messageBody.getText().isEmpty() == false & AgentNameField.getText().isEmpty()==false)
 						{chatText.appendText(
@@ -176,7 +173,7 @@ public class Agent extends Application {
 	private void setupUpperSide(Stage primaryStage) {
 		//Set number of cols to organize elements
 		int numCols = 5;
-		for (int i = 0; i < numCols; i++) {
+		for (int i = 0; i < numCols; i++) { //loops through the columns
 			ColumnConstraints colConst = new ColumnConstraints();
 			if (i==0) {
 				colConst.setPrefWidth(80);
@@ -228,11 +225,11 @@ public class Agent extends Application {
 			// Create input stream
 			Scanner inputStream = new Scanner(loadFile);
 			while (inputStream.hasNext()) {
-				// Read in file, append to message box for sending
+				// Read in file, appends to message box 
 				String data = inputStream.nextLine();
 				messageBody.appendText(data);
 			}
-			// This will show a confirmation that file has been loaded successfully
+			//Confirmation will be sent
 			alert.setTitle("Confirmation Box");
 			alert.setContentText("File has been successfully loaded!");
 			alert.showAndWait();
@@ -242,13 +239,12 @@ public class Agent extends Application {
 
 	}
 
-	// This will write the conversation to the file using writer and bufferedwriter
+	// Sends the conversation to the file using writer and bufferedwriter
 	private void saveAs() {
-	// Creates buffer writer, get the textarea content, write to the file, then it closes the connection
-		try (Writer writer = new BufferedWriter(new FileWriter(saveAsFile))) {
-			String chatContent = chatText.getText();
-			writer.write(chatContent);
-			writer.close();
+		try (Writer writer = new BufferedWriter(new FileWriter(saveAsFile))) { //Creates buffer writer 
+			String chatContent = chatText.getText(); //gets the textarea content
+			writer.write(chatContent); //writes to the file
+			writer.close(); //closes the connection
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("Confirmation Box");
 			alert.setContentText("Conversation has been successfully saved!");
