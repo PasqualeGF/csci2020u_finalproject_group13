@@ -217,19 +217,24 @@ public class Agent extends Application {
 	}
 
 	// Function to load product data from file upon clicking Load button
-
+	
 	private void loadProduct() throws Exception {
 
 		try {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			// Create input stream
 			Scanner inputStream = new Scanner(loadFile);
+			// Update Agent chat
+			chatText.appendText("\n Agent (" + AgentNameField.getText() + "):");
+			// Send message to Client
+			sendMessage("\n Agent (" + AgentNameField.getText() + "):");
 			while (inputStream.hasNext()) {
-				// Read in file, appends to message box 
+				// Read in file, update Agent chat and send to client
 				String data = inputStream.nextLine();
-				messageBody.appendText(data);
+				chatText.appendText("\n " + data);
+				sendMessage("\n " + data);
 			}
-			//Confirmation will be sent
+			// This will show a confirmation that file has been loaded successfully
 			alert.setTitle("Confirmation Box");
 			alert.setContentText("File has been successfully loaded!");
 			alert.showAndWait();
