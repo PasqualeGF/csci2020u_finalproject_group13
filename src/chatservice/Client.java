@@ -48,6 +48,7 @@ public class Client extends Application {
 	Button replyBtn = new Button("Reply");
 	// This button saves the chat text into a txt file.
 	Button saveBtn = new Button("Save Chat");
+	// Client name label
 	Label nameLbl = new Label(" Client Name:");
 	// Reply body
 	TextField messageBody = new TextField();
@@ -63,7 +64,7 @@ public class Client extends Application {
 		// Creates and configure User Window
 		primaryStage.setResizable(false);
 		setupGUI(primaryStage);
-		//Start the chat server
+		// Start the chat server
 		startChat();
 
 	}
@@ -96,14 +97,11 @@ public class Client extends Application {
 
 	// This function will setup the container area
 	private void setupContainer() {
-		// add components in order to fill the window
+		// Add components in order to fill the window
 		container.getChildren().addAll(upperSide, chatBar, lowerSide);
 	}
 
-	/*
-	 * This function will setup the chat scroll bar including the text area
-	 *
-	 */
+	// This function will setup the chat scroll bar including the text area
 	private void setupChat() {
 		// Disable editing the textarea using SetEditable();
 		chatText.setEditable(false);
@@ -114,9 +112,9 @@ public class Client extends Application {
 
 	// This function will setup the chat components
 	private void setupLowerSide() {
-		//Set number of columns to organize elements
+		// Set number of columns to organize elements
 		int numCols = 4;
-		for (int i = 0; i < numCols; i++) { //loops through the columns
+		for (int i = 0; i < numCols; i++) { // Loops through the columns
 			ColumnConstraints colConst = new ColumnConstraints();
 			colConst.setPrefWidth(110);
 			if (i==0){
@@ -161,7 +159,7 @@ public class Client extends Application {
 
 	// This function will setup the name components
 	private void setupUpperside(Stage primaryStage) {
-		// Set number of cols to organize elements
+		// Set number of columns to organize elements
 		int numCols = 4;
 		for (int i = 0; i < numCols; i++) { //loops through the cols
 			ColumnConstraints colConst = new ColumnConstraints();
@@ -176,7 +174,7 @@ public class Client extends Application {
 			}
 			upperSide.getColumnConstraints().add(colConst);
 		}
-		// Add elements to cols
+		// Add elements to the columns
 		ClientNameField.setMaxWidth(1000);
 		upperSide.add(nameLbl, 0, 0);
 		upperSide.add(ClientNameField, 1, 0,2,1);
@@ -191,10 +189,14 @@ public class Client extends Application {
 
 	// Sends the conversation to the file using writer and bufferedwriter
 	private void saveAs() {
-		try (Writer writer = new BufferedWriter(new FileWriter(saveAsFile))) { //Creates buffer writer
-			String chatContent = chatText.getText(); //get textarea context
-			writer.write(chatContent);//write to the file
-			writer.close();//closes the connection
+		try (Writer writer = new BufferedWriter(new FileWriter(saveAsFile))) { // Create buffered writer
+			// Get textarea context
+			String chatContent = chatText.getText();
+			// Write to the file
+			writer.write(chatContent);
+			// Closes the buffered writer
+			writer.close();
+			// Alert user to confirmation of file being saved
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("Confirmation Box");
 			alert.setContentText("Conversation has been successfully saved!");

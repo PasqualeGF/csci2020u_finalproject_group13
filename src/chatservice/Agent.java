@@ -39,9 +39,9 @@ public class Agent extends Application {
 	// Creating Window Components and GUI Components
 	// The VBox container will contain the window
 	VBox container = new VBox();
-	//upperSide nameLabel,AgentNameField and save button
+	// upperSide nameLabel,AgentNameField and save button
 	GridPane upperSide = new GridPane();
-	//Scrollbar is created for the textarea
+	// Scrollbar is created for the textarea
 	ScrollPane chatBar = new ScrollPane();
 	TextArea chatText = new TextArea();
 	// lowerSide GridPane contains: reply button, messageBody
@@ -50,10 +50,10 @@ public class Agent extends Application {
 	Button replyBtn = new Button("Reply");
 	// saveBtn will save the chat text into a txt file.
 	Button saveBtn = new Button("Save Chat");
+	// Agent name label and message field
 	Label nameLbl = new Label(" Agent Name:");
-
 	TextField messageBody = new TextField();
-	// Method to get the textflied from user name
+	// Agent name text field
 	TextField AgentNameField = new TextField();
 	// Product info loads
 	File loadFile;
@@ -61,7 +61,7 @@ public class Agent extends Application {
 	Button loadBtn = new Button("Load Product");
 	// Fil_chooser loads the product data from a txt file
 	FileChooser fil_chooser = new FileChooser();
-	// Target file to save the conversation.
+	// Target file to save the conversation
 	File saveAsFile;
 	// File Chooser to save the file
 	FileChooser fil2_chooser = new FileChooser();
@@ -82,11 +82,11 @@ public class Agent extends Application {
 		System.exit(0);
 	}
 	private void setupGUI(Stage primaryStage) {
-		// this method will configure the upperSide GridPane containing nameLabel, AgentNameField and save/load btns
+		// Function to configure the upperSide GridPane containing nameLabel, AgentNameField and save/load btns
 		setupUpperSide(primaryStage);
-		// This method will configure the lowerSide GridPane containing replyBtn,messageBody
+		// Function to configure the lowerSide GridPane containing replyBtn,messageBody
 		setupLowerSide();
-		// This method will configure the ScrollBar and the TextArea
+		// Function to configure the ScrollBar and the TextArea
 		setupChat();
 		// Adding children to Vbox
 		setupContainer();
@@ -108,10 +108,7 @@ public class Agent extends Application {
 		container.getChildren().addAll(upperSide, chatBar, lowerSide);
 	}
 
-	/*
-	 * Function setup the chat scrollbar, adds the textarea to it
-	 *
-	 */
+	// Function to setup the chat scrollbar, adds the textarea to it
 	private void setupChat() {
 		// Set width
 		chatText.setMaxWidth(1000);
@@ -139,7 +136,7 @@ public class Agent extends Application {
 		messageBody.setMaxWidth(2000);
 		lowerSide.add(replyBtn, 4, 0);
 		lowerSide.add(messageBody, 0, 0,4,1);
-		//Adds the text to chat area and provides it to the Agent.
+		// Adds the text to chat area and provides it to the Agent.
 		replyBtn.setOnAction(
 				e -> {// Check if any of the fields is empty and stop the process
 					if (messageBody.getText().isEmpty() == false & AgentNameField.getText().isEmpty()==false)
@@ -171,9 +168,9 @@ public class Agent extends Application {
 
 	// This function will setup the name components
 	private void setupUpperSide(Stage primaryStage) {
-		//Set number of cols to organize elements
+		// Set number of cols to organize elements
 		int numCols = 5;
-		for (int i = 0; i < numCols; i++) { //loops through the columns
+		for (int i = 0; i < numCols; i++) { // Loops through the columns
 			ColumnConstraints colConst = new ColumnConstraints();
 			if (i==0) {
 				colConst.setPrefWidth(80);
@@ -190,6 +187,7 @@ public class Agent extends Application {
 			upperSide.getColumnConstraints().add(colConst);
 		}
 		AgentNameField.setMaxWidth(1000);
+		// Add each part of upper GUI
 		upperSide.add(nameLbl, 0, 0);
 		upperSide.add(AgentNameField, 1, 0,2,1);
 		upperSide.add(loadBtn, 4, 0);
@@ -217,39 +215,48 @@ public class Agent extends Application {
 	}
 
 	// Function to load product data from file upon clicking Load button
-	
-	private void loadProduct() throws Exception {
 
-		try {
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			// Create input stream
-			Scanner inputStream = new Scanner(loadFile);
-			// Update Agent chat
-			chatText.appendText("\n Agent (" + AgentNameField.getText() + "):");
-			// Send message to Client
-			sendMessage("\n Agent (" + AgentNameField.getText() + "):");
-			while (inputStream.hasNext()) {
-				// Read in file, update Agent chat and send to client
-				String data = inputStream.nextLine();
-				chatText.appendText("\n " + data);
-				sendMessage("\n " + data);
+	private void loadProduct() throws Exception {
+		// Make sure Agent's name isn't empty
+		if (AgentNameField.getText().isEmpty()==false) {
+			try {
+				// Create input stream
+				Scanner inputStream = new Scanner(loadFile);
+				// Update Agent chat
+				chatText.appendText("\n Agent (" + AgentNameField.getText() + "):");
+				// Send message to Client
+				sendMessage("\n Agent (" + AgentNameField.getText() + "):");
+				while (inputStream.hasNext()) {
+					// Read in file, update Agent chat and send to client
+					String data = inputStream.nextLine();
+					chatText.appendText("\n " + data);
+					sendMessage("\n " + data);
+				}
+				// Create confirmation alert
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				// This will show a confirmation that file has been loaded successfully
+				alert.setTitle("Confirmation Box");
+				alert.setContentText("File has been successfully loaded!");
+				alert.showAndWait();
+			} catch (FileNotFoundException e) {
+				System.out.println("Something went wrong while reading the file");
 			}
-			// This will show a confirmation that file has been loaded successfully
-			alert.setTitle("Confirmation Box");
-			alert.setContentText("File has been successfully loaded!");
-			alert.showAndWait();
-		} catch (FileNotFoundException e) {
-			System.out.println("Something went wrong while reading the file");
+		}
+		else{ // Send error if Agent's name is empty
+			setupErrorBox();
 		}
 
 	}
 
 	// Sends the conversation to the file using writer and bufferedwriter
 	private void saveAs() {
-		try (Writer writer = new BufferedWriter(new FileWriter(saveAsFile))) { //Creates buffer writer 
-			String chatContent = chatText.getText(); //gets the textarea content
-			writer.write(chatContent); //writes to the file
-			writer.close(); //closes the connection
+		try (Writer writer = new BufferedWriter(new FileWriter(saveAsFile))) { //Create buffered writer
+			// Gets the textarea content
+			String chatContent = chatText.getText();
+			// Writes to the file
+			writer.write(chatContent);
+			// Closes the buffered writer
+			writer.close();
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("Confirmation Box");
 			alert.setContentText("Conversation has been successfully saved!");
