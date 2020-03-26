@@ -1,0 +1,8 @@
+Name: Canon EOS Rebel SL2 DSLR
+ID: 11467495
+Price: $599.99
+Description: Capture all of life's precious and all-too-fleeting moments with this 
+Canon EOS Rebel SL2 DSLR camera. It comes with an 18-55mm lens kit and features a 
+powerful 24.2MP CMOS sensor and DIGIC 7 image processor. Your photos will look 
+sharp, clear, and professional. It also features Bluetooth, Wi-Fi, and NFC 
+connectivity.

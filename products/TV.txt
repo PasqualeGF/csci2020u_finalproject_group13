@@ -1,0 +1,8 @@
+Name: Samsung 50" 4K Tizen Smart TV
+ID: 18430295
+Price: $549.99
+Description: Open up a world of colour with the Samsung 50" 4K Smart TV. This slim 
+and sleek television boasts an Ultra HD display with High Dynamic Range and 
+PurColor technology to deliver all of your movies, shows, and games in vivid, 
+true-to-life detail. Wi-Fi connectivity lets you access apps like Netflix and 
+YouTube to enjoy your favourite content.

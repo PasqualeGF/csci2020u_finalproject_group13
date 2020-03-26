@@ -1,0 +1,8 @@
+Name: HyperX Cloud II Over-Ear Gaming Headset
+ID: 11800872
+Price: $134.99
+Description: Get the drop on your competition and always come out on top with this 
+HyperX Cloud II over-ear PC gaming headset. It's equipped with a USB sound card 
+audio control box that delivers virtual 7.1 surround sound when used on PCs or Macs
+with a USB 7.1 sound card. The noise-cancelling microphone is Teamspeak Certified,
+so your in-game chat with your squad is crystal-clear.

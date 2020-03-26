@@ -1,0 +1,7 @@
+Name: Logitech M310 Wireless Optical Mouse
+ID: 11042778
+Price: $19.99
+Description: With its contoured design and plug-and-forget nano-receiver, the 
+Logitech Wireless Mouse M310 is the easy-to-use, full-size mouse that feels just 
+right. Plus, it gives you the freedom of wireless, so you can work and play with 
+ease no matter where you are.

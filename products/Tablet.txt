@@ -1,0 +1,8 @@
+Name: Samsung Galaxy Tablet 10.1" 32GB
+ID: 13484291
+Price: $269.99
+Description: Enjoy endless entertainment at home or on the go with the Samsung 
+Galaxy Tab A. This 10.1" tablet boasts the Android 9.0 operating system, a powerful
+eight-core processor, and 2GB ram to fuel your apps, games, and videos. It features 
+a streamlined aluminum body that is lightweight and easy to hold for comfort and 
+portability.

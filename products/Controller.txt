@@ -1,0 +1,7 @@
+Name: Xbox One PC Controller
+ID: 10520805
+Price: $74.99
+Description: Take the reins of the action with this Xbox One wired PC controller. 
+Responsive thumbsticks and an enhanced D-pad provide greater precision whether 
+you're playing a sports or first-person shooter game. A direct USB connection 
+between the controller and your PC ensures a secure gaming experience.
