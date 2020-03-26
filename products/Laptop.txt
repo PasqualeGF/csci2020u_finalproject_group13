@@ -1,0 +1,8 @@
+Name: Acer 15.6" Gaming Laptop
+ID: 14765434
+Price: $849.99
+Description: Take your gaming experience to the next level with this Acer laptop. 
+An Intel Ci5 9300H processor and 12GB RAM combined with a 3GB NVIDIA GeForce 
+graphics card means it runs even performance-demanding games smoothly. FHD IPS 
+display with super-thin bezel offers maximum screen area while CoolBoost technology
+with dual fans prevents overheating.

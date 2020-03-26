@@ -1,0 +1,7 @@
+Name: Logitech Wireless Keyboard
+ID: 10201435
+Price: $34.99
+Description: This compact wireless keyboard lets you type in more comfort with a 
+layout you're used to. It prevents you from hunching over your laptop to type. 
+And it's about 20% smaller than our standard keyboards, so it fits in your office, 
+your living room or wherever you use your computer.
