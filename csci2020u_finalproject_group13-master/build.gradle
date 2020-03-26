@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
+}
+javafx {
+    version = '11.0.2'
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+repositories {
+    mavenCentral()
+}
+dependencies {
+    compile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'commons-validator', name: 'commons-validator', version: '1.4.1'
+}
+defaultTasks 'runClient', 'runAgent'
+task(runClient, type: JavaExec) {
+    doFirst {
+        jvmArgs = [ '--module-path', 'C:\\JavaJDK\\javafx-sdk-11.0.2\\lib', '--add-modules', 'javafx.controls,javafx.fxml' ]
+    }
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'chatservice.Client'
+}
+task(runAgent, type: JavaExec) {
+    doFirst {
+        jvmArgs = [ '--module-path', 'C:\\JavaJDK\\javafx-sdk-11.0.2\\lib', '--add-modules', 'javafx.controls,javafx.fxml' ]
+    }
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'chatservice.Agent'
+}
